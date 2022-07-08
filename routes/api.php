@@ -1,9 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\Brand\BrandController;
 use App\Http\Controllers\Api\Category\CategoryController;
 use App\Http\Controllers\Api\User\UserController;
 use App\Http\Controllers\CarController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::resource('/user', UserController::class);
 Route::resource('/car', CarController::class);
 Route::resource('/category', CategoryController::class);
+Route::resource('/brand', BrandController::class);
 
 
 //Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

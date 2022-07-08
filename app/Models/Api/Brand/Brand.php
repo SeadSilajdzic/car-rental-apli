@@ -1,25 +1,20 @@
 <?php
 
-namespace App\Models\Api\Category;
+namespace App\Models\Api\Brand;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Brand extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'category_id'
+        'name'
     ];
 
     protected $dates = [
         'created_at',
         'updated_at'
     ];
-
-    public function categories() {
-        return $this->hasMany(Category::class, 'parent_id', 'id');
-    }
 }

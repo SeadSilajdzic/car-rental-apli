@@ -15,6 +15,17 @@ class CreateCarsTable extends Migration
     {
         Schema::create('cars', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('brand_id')->constrained('brands')->onDelete('cascade');
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
+            $table->string('registration_license')->unique();
+            $table->string('model');
+            $table->string('slug');
+            $table->decimal('price');
+            $table->string('manufacture_date');
+            $table->text('description');
+            $table->integer('fuel_capacity')->nullable();
+            $table->integer('number_of_seats')->nullable();
+            $table->integer('truck_volume')->nullable();
             $table->timestamps();
         });
     }
