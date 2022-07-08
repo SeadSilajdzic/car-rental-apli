@@ -1,10 +1,10 @@
 <?php
 
-namespace Database\Factories\Api\Category;
+namespace Database\Factories\Api\Brand;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class CategoryFactory extends Factory
+class BrandFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -14,8 +14,7 @@ class CategoryFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->word,
-            'parent_id' => $this->faker->randomElement([null, '1', '2'])
+            'name' => $this->faker->word
         ];
     }
 }

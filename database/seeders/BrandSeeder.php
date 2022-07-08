@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Api\Car\Car;
+use App\Models\Api\Brand\Brand;
 use Illuminate\Database\Seeder;
 
-class CarSeeder extends Seeder
+class BrandSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class CarSeeder extends Seeder
      */
     public function run()
     {
-        Car::factory()->count(100)->create();
+        Brand::factory()->count(10)->create();
     }
 }
