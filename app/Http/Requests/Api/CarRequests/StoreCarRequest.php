@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\CarRequests;
 
+use App\Models\Api\Car\Car;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreCarRequest extends FormRequest
@@ -13,7 +14,7 @@ class StoreCarRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +24,6 @@ class StoreCarRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        return Car::VALIDATION_RULES;
     }
 }

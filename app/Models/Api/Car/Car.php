@@ -31,6 +31,31 @@ class Car extends Model
         'updated_at'
     ];
 
+    public const VALIDATION_RULES = [
+        'brand_id' => 'required|integer',
+        'category_id' => 'required|integer',
+        'registration_license' => 'required|string',
+        'model' => 'required|string',
+        'slug' => 'required|string',
+        'price' => 'required|integer',
+        'manufacture_date' => 'required|date',
+        'description' => 'required|string',
+        'fuel_capacity' => 'nullable|integer',
+        'number_of_seats' => 'nullable|integer',
+        'truck_volume' => 'nullable|integer'
+    ];
+
+    public static function carsWithRelations() {
+        return Car::select(['id', 'model', 'slug', 'registration_license', 'category_id', 'brand_id', 'manufacture_date', 'price', 'description', 'fuel_capacity', 'number_of_seats', 'truck_volume'])
+            ->orderByDesc('id')
+            ->with(['category' => function($query) {
+                $query->select('id', 'name', 'parent_id');
+            }, 'brand' => function($query) {
+                $query->select('id', 'name');
+            }])
+            ->get();
+    }
+
     public function category() {
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }

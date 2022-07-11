@@ -1,86 +1,77 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\Car;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\CarRequests\StoreCarRequest;
 use App\Http\Requests\Api\CarRequests\UpdateCarRequest;
 use App\Models\Api\Car\Car;
+use Illuminate\Http\Response;
 
 class CarController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Car::carsWithRelations();
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreCarRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreCarRequest $request
+     * @return Response
      */
     public function store(StoreCarRequest $request)
     {
-        //
+        return Car::create($request->all());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Api\Car\Car  $car
-     * @return \Illuminate\Http\Response
+     * @param Car $car
+     * @return Car
      */
     public function show(Car $car)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Api\Car\Car  $car
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Car $car)
-    {
-        //
+        $car->load(['category' => function($query) {
+            $query->select('id', 'name', 'parent_id');
+        }, 'brand' => function($query) {
+            $query->select('id', 'name');
+        }]);
+        return $car;
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateCarRequest  $request
-     * @param  \App\Models\Api\Car\Car  $car
-     * @return \Illuminate\Http\Response
+     * @param UpdateCarRequest $request
+     * @param Car $car
+     * @return bool
      */
     public function update(UpdateCarRequest $request, Car $car)
     {
-        //
+        $car->update($request->all());
+        $message = $car->model . ' - ' . $car->registration_license . ' has been updated';
+        return response($message);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Api\Car\Car  $car
-     * @return \Illuminate\Http\Response
+     * @param Car $car
+     * @return string
      */
     public function destroy(Car $car)
     {
-        //
+        $message = 'Car ' . $car->model . ' - ' . $car->manufacture_date . ' has been deleted.';
+        $car->delete();
+
+        return $message;
     }
 }
