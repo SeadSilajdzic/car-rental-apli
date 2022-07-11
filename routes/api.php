@@ -38,7 +38,3 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::resource('/category', CategoryController::class)->only(['store', 'update', 'destroy']);
     Route::resource('/brand', BrandController::class)->only(['store', 'update', 'destroy']);
 });
-
-//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
