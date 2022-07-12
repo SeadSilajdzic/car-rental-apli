@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\CategoryRequests;
 
+use App\Models\Api\Category\Category;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateCategoryRequest extends FormRequest
@@ -13,7 +14,7 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +24,6 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        return Category::VALIDATION_RULES;
     }
 }
