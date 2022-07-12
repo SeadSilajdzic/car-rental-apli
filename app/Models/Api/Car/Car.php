@@ -31,6 +31,7 @@ class Car extends Model
         'updated_at'
     ];
 
+    // Public constants
     public const VALIDATION_RULES = [
         'brand_id' => 'required|integer',
         'category_id' => 'required|integer',
@@ -45,6 +46,7 @@ class Car extends Model
         'truck_volume' => 'nullable|integer'
     ];
 
+    // Helper functions
     public static function carsWithRelations() {
         return Car::select(['id', 'model', 'slug', 'registration_license', 'category_id', 'brand_id', 'manufacture_date', 'price', 'description', 'fuel_capacity', 'number_of_seats', 'truck_volume'])
             ->orderByDesc('id')
@@ -56,6 +58,13 @@ class Car extends Model
             ->get();
     }
 
+    public static function carResponse($message, $status) {
+        return response([
+            'message' => $message
+        ], $status);
+    }
+
+    // Relationships
     public function category() {
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }

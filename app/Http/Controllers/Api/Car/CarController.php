@@ -28,7 +28,9 @@ class CarController extends Controller
      */
     public function store(StoreCarRequest $request)
     {
-        return Car::create($request->all());
+        $car = Car::create($request->all());
+        $message = 'Car model ' . $car->model . ' has been created';
+        return Car::carResponse($message, 201);
     }
 
     /**
@@ -58,7 +60,7 @@ class CarController extends Controller
     {
         $car->update($request->all());
         $message = $car->model . ' - ' . $car->registration_license . ' has been updated';
-        return response($message);
+        return Car::carResponse($message, 200);
     }
 
     /**
@@ -72,6 +74,6 @@ class CarController extends Controller
         $message = 'Car ' . $car->model . ' - ' . $car->manufacture_date . ' has been deleted.';
         $car->delete();
 
-        return $message;
+        return Car::carResponse($message, 200);
     }
 }
