@@ -41,14 +41,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // Public constants
+    // ===== Public constants
     public const VALIDATION_RULES = [
         'name' => 'required|string',
         'email' => 'required|email',
         'password' => 'required|string|confirmed|min:6'
     ];
 
-    // Helper functions
+    // ===== Helper functions
     public static function userResponse($message, $status) {
         return response([
             'message' => $message
