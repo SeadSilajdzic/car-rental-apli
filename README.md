@@ -15,12 +15,13 @@ This application contains:
 <hr>
 Done: 
 <ul>
-    <li>Models => Car, User</li>
-    <li>Nested categories and brands</li>
+    <li>Models => Car, User, Category</li>
+    <li>Nested categories</li>
     <li>Dummy data factories/seeders</li>
     <li>File structure</li>
     <li>Migrations</li>
     <li>Custom car slug (brand_model_registration-number)</li>
-    <li>Car/User CRUD</li>
+    <li>Car/User/Category CRUD</li>
     <li>Authentication</li>
+    <li>Code cleanup</li>
 </ul>
