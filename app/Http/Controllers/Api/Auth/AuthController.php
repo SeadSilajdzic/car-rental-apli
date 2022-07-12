@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\UserRequests\StoreUserRequest;
 use App\Models\Api\User\User;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
@@ -12,29 +13,16 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     /**
-     * @param Request $request
+     * @param StoreUserRequest $request
      * @return ResponseFactory|Response
      */
-    public function register(Request $request) {
-        $data = $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email',
-            'password' => 'required|confirmed|min:6'
-        ]);
-
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password'])
-        ]);
-
+    public function register(StoreUserRequest $request) {
+        $user = User::create(User::userValuesArray($request));
         $token = $user->createToken('authentificationToken')->plainTextToken;
-
         $response = [
             'user' => $user,
             'token' => $token
         ];
-
         return response($response);
     }
 
