@@ -31,12 +31,13 @@ class Car extends Model
         'updated_at'
     ];
 
+    // Public constants
     public const VALIDATION_RULES = [
         'brand_id' => 'required|integer',
         'category_id' => 'required|integer',
         'registration_license' => 'required|string',
         'model' => 'required|string',
-        'slug' => 'required|string',
+        'slug' => 'nullable|string',
         'price' => 'required|integer',
         'manufacture_date' => 'required|date',
         'description' => 'required|string',
@@ -45,6 +46,7 @@ class Car extends Model
         'truck_volume' => 'nullable|integer'
     ];
 
+    // Helper functions
     public static function carsWithRelations() {
         return Car::select(['id', 'model', 'slug', 'registration_license', 'category_id', 'brand_id', 'manufacture_date', 'price', 'description', 'fuel_capacity', 'number_of_seats', 'truck_volume'])
             ->orderByDesc('id')
@@ -56,6 +58,31 @@ class Car extends Model
             ->get();
     }
 
+    public static function carResponse($message, $status) {
+        return response([
+            'message' => $message
+        ], $status);
+    }
+
+    public static function carValuesArray($request) {
+        $data = $request->validated();
+        $brand = Brand::where('id', $data['brand_id'])->first();
+        $model = $data['model'];
+        $regLicense = $data['registration_license'];
+        $slug = str_replace(' ', '_', strtolower($brand->name . '_' . $model . '_' . $regLicense));
+        return [
+            'brand_id' => $brand->id,
+            'category_id' => $data['category_id'],
+            'registration_license' => $regLicense,
+            'model' => $model,
+            'slug' => $slug,
+            'price' => $data['price'],
+            'manufacture_date' => $data['manufacture_date'],
+            'description' => $data['description'],
+        ];
+    }
+
+    // Relationships
     public function category() {
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
