@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\UserRequests;
 
+use App\Models\Api\User\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateUserRequest extends FormRequest
@@ -13,7 +14,7 @@ class UpdateUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +24,6 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        return User::VALIDATION_RULES;
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Models\Api\User;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -41,4 +40,27 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // Public constants
+    public const VALIDATION_RULES = [
+        'name' => 'required|string',
+        'email' => 'required|email',
+        'password' => 'required|string|confirmed|min:6'
+    ];
+
+    // Helper functions
+    public static function userResponse($message, $status) {
+        return response([
+            'message' => $message
+        ], $status);
+    }
+
+    public static function userValuesArray($request) {
+        $data = $request->validated();
+        return [
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password'])
+        ];
+    }
 }
