@@ -22,4 +22,5 @@ Done:
     <li>Migrations</li>
     <li>Custom car slug (brand_model_registration-number)</li>
     <li>Car/User CRUD</li>
+    <li>Authentication</li>
 </ul>
