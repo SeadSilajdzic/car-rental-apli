@@ -47,15 +47,23 @@ class Car extends Model
     ];
 
     // ===== Helper functions
-    public static function carsWithRelations() {
-        return Car::select(['id', 'model', 'slug', 'registration_license', 'category_id', 'brand_id', 'manufacture_date', 'price', 'description', 'fuel_capacity', 'number_of_seats', 'truck_volume'])
-            ->orderByDesc('id')
-            ->with(['category' => function($query) {
-                $query->select('id', 'name', 'parent_id');
-            }, 'brand' => function($query) {
-                $query->select('id', 'name');
-            }])
-            ->get();
+    public static function carsWithRelations($currency = null) {
+        $query = Car::select(['id', 'model', 'slug', 'registration_license', 'category_id', 'brand_id', 'manufacture_date', 'price', 'description', 'fuel_capacity', 'number_of_seats', 'truck_volume'])
+            ->orderByDesc('price');
+
+        $cars = $query->with(['category' => function($query) {
+            $query->select('id', 'name', 'parent_id');
+        }, 'brand' => function($query) {
+            $query->select('id', 'name');
+        }])->paginate(10);
+
+        if($currency) {
+            foreach($cars as $car) {
+                $car->price = number_format($car->price * $currency, 2);
+            }
+        }
+
+        return $cars;
     }
 
     public static function carResponse($message, $status) {

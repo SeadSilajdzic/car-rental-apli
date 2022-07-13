@@ -25,7 +25,7 @@ Route::post('/auth/login', [AuthController::class, 'login']);
 // Public routes
 Route::resource('/user', UserController::class)->only(['index', 'show']);
 Route::get('/car/{brand}/{model}/{from_price}/{to_price}/search', [CarController::class, 'searchCars']);
-Route::resource('/car', CarController::class)->only(['index', 'show']);
+Route::resource('/car/{currency?}', CarController::class)->only(['index', 'show']);
 Route::get('/category/{query}/search', [CategoryController::class, 'searchCategoryCars']);
 Route::resource('/category', CategoryController::class)->only(['index', 'show']);
 Route::resource('/brand', BrandController::class)->only(['index', 'show']);

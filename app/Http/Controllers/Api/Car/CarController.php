@@ -8,17 +8,29 @@ use App\Http\Requests\Api\CarRequests\UpdateCarRequest;
 use App\Models\Api\Brand\Brand;
 use App\Models\Api\Car\Car;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Http;
 
 class CarController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param $currency
      * @return Response
      */
-    public function index()
+    public function index($currency = null)
     {
+        if($currency !== null) {
+            $response = Http::get('https://api.fastforex.io/fetch-one?from=USD&to='. $currency .'&api_key=e2eb3fbb08-414f59e7c2-reyc8r');
+            $currencyResponse = $response->json('result');
+            foreach($currencyResponse as $key => $value) {
+                $currency = $value;
+            }
+            return Car::carsWithRelations($currency);
+        }
+
         return Car::carsWithRelations();
+
     }
 
     /**
