@@ -5,83 +5,70 @@ namespace App\Http\Controllers\Api\Brand;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\BrandRequests\StoreBrandRequest;
 use App\Http\Requests\Api\BrandRequests\UpdateBrandRequest;
-use Illuminate\Http\Request;
+use App\Models\Api\Brand\Brand;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Response;
 
 class BrandController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Brand|Collection
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Brand::getBrands();
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreBrandRequest $request
+     * @return Response
      */
     public function store(StoreBrandRequest $request)
     {
-        //
+        $brand = Brand::create(Brand::brandValuesArray($request));
+        $message = 'Brand ' . $brand->name . ' has been created';
+        return Brand::brandResponse($message, 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Brand $brand
+     * @return Brand
      */
-    public function show($id)
+    public function show(Brand $brand)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return $brand;
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UpdateBrandRequest $request
+     * @param Brand $brand
+     * @return void
      */
-    public function update(UpdateBrandRequest $request, $id)
+    public function update(UpdateBrandRequest $request, Brand $brand)
     {
-        //
+        $brand->update(Brand::brandValuesArray($request));
+        $message = 'Brand updated: ' . $brand->name;
+        return Brand::brandResponse($message, 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Brand $brand
+     * @return void
      */
-    public function destroy($id)
+    public function destroy(Brand $brand)
     {
-        //
+        $message = 'Brand ' . $brand->name . ' has been removed';
+        $brand->delete();
+        return Brand::brandResponse($message, 200);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\BrandRequests;
 
+use App\Models\Api\Brand\Brand;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateBrandRequest extends FormRequest
@@ -13,7 +14,7 @@ class UpdateBrandRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +24,6 @@ class UpdateBrandRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        return Brand::VALIDATION_RULES;
     }
 }

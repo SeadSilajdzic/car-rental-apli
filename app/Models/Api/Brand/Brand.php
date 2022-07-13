@@ -17,4 +17,27 @@ class Brand extends Model
         'created_at',
         'updated_at'
     ];
+
+    // ===== Helper functions
+    public static function getBrands() {
+        return Brand::select(['id', 'name'])->get();
+    }
+
+    public static function brandResponse($message, $status) {
+        return response([
+            'message' => $message
+        ], $status);
+    }
+
+    public static function brandValuesArray($request) {
+        $data = $request->validated();
+        return [
+            'name' => $data['name']
+        ];
+    }
+
+    // ===== Public constants
+    public const VALIDATION_RULES = [
+        'name' => 'required|string'
+    ];
 }
