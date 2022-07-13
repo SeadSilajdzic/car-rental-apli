@@ -44,6 +44,10 @@ class Category extends Model
         ]);
     }
 
+    public static function getCategories() {
+        return Category::select(['id', 'name', 'parent_id'])->withCount(['cars', 'categories'])->get();
+    }
+
     public static function categoryValuesArray($request) {
         $data = $request->validated();
         if($data['parent_id'] == 0 || !isset($data['parent_id'])) {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Car;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\CarRequests\StoreCarRequest;
 use App\Http\Requests\Api\CarRequests\UpdateCarRequest;
+use App\Models\Api\Brand\Brand;
 use App\Models\Api\Car\Car;
 use Illuminate\Http\Response;
 
@@ -74,5 +75,17 @@ class CarController extends Controller
         $message = 'Car ' . $car->model . ' - ' . $car->manufacture_date . ' has been deleted.';
         $car->delete();
         return Car::carResponse($message, 200);
+    }
+
+    /**
+     * @param $brand
+     * @param $model
+     * @param $fromPrice
+     * @param $toPrice
+     * @return mixed
+     */
+    public function searchCars($brand, $model, $fromPrice, $toPrice) {
+        $brand = Brand::where('name', 'like', '%' . $brand . '%')->first();
+        return Car::where('brand_id', $brand->id)->where('model', 'like', '%' . $model . '%')->where('price', '>', $fromPrice)->andWhere('price', '<', $toPrice)->get();
     }
 }

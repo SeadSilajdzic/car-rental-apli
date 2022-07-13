@@ -17,7 +17,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return Category::select(['id', 'name', 'parent_id'])->withCount(['cars', 'categories'])->get();
+        return Category::getCategories();
     }
 
     /**
@@ -70,5 +70,13 @@ class CategoryController extends Controller
         $message = "Category " . $category->name . ' has been removed';
         $category->delete();
         return Category::categoryResponse($message, 200);
+    }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
+    public function searchCategoryCars($query) {
+        return Category::where('name', 'like', '%' . $query . '%')->with('cars')->get();
     }
 }
