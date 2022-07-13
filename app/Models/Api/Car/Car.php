@@ -47,7 +47,7 @@ class Car extends Model
     ];
 
     // ===== Helper functions
-    public static function carsWithRelations($currency = null) {
+    public static function carsWithRelations($currencyValue = null) {
         $query = Car::select(['id', 'model', 'slug', 'registration_license', 'category_id', 'brand_id', 'manufacture_date', 'price', 'description', 'fuel_capacity', 'number_of_seats', 'truck_volume'])
             ->orderByDesc('price');
 
@@ -57,9 +57,9 @@ class Car extends Model
             $query->select('id', 'name');
         }])->paginate(10);
 
-        if($currency) {
+        if($currencyValue) {
             foreach($cars as $car) {
-                $car->price = number_format($car->price * $currency, 2);
+                $car->price = number_format($car->price * $currencyValue, 2);
             }
         }
 

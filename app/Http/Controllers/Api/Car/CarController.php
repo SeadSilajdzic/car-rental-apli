@@ -24,9 +24,9 @@ class CarController extends Controller
             $response = Http::get('https://api.fastforex.io/fetch-one?from=USD&to='. $currency .'&api_key=e2eb3fbb08-414f59e7c2-reyc8r');
             $currencyResponse = $response->json('result');
             foreach($currencyResponse as $key => $value) {
-                $currency = $value;
+                $currencyValue = $value;
             }
-            return Car::carsWithRelations($currency);
+            return Car::carsWithRelations($currencyValue);
         }
 
         return Car::carsWithRelations();
