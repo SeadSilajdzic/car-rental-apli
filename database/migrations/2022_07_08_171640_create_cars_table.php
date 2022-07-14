@@ -20,6 +20,7 @@ class CreateCarsTable extends Migration
             $table->string('registration_license')->unique();
             $table->string('model');
             $table->string('slug');
+            $table->boolean('isAvailable')->comment('0 Cant be rented / 1 can be rented');
             $table->decimal('price');
             $table->string('manufacture_date');
             $table->text('description');

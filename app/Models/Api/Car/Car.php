@@ -48,7 +48,7 @@ class Car extends Model
 
     // ===== Helper functions
     public static function carsWithRelations($currencyValue = null) {
-        $query = Car::select(['id', 'model', 'slug', 'registration_license', 'category_id', 'brand_id', 'manufacture_date', 'price', 'description', 'fuel_capacity', 'number_of_seats', 'truck_volume'])
+        $query = Car::select(['id', 'isAvailable', 'model', 'slug', 'registration_license', 'category_id', 'brand_id', 'manufacture_date', 'price', 'description', 'fuel_capacity', 'number_of_seats', 'truck_volume'])
             ->orderByDesc('price');
 
         $cars = $query->with(['category' => function($query) {
