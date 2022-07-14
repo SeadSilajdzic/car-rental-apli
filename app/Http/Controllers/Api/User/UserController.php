@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Api\User;
 
+use App\Exports\RentedCars;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\UserRequests\StoreUserRequest;
 use App\Http\Requests\Api\UserRequests\UpdateUserRequest;
 use App\Models\Api\User\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Response;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
